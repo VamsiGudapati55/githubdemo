@@ -1,0 +1,242 @@
+Programe-1;
+
+package liscenseApplication;
+
+import java.util.Scanner;
+class UnderAgeException extends Exception{
+	UnderAgeException(String msg){
+		super(msg);
+	}
+	
+	
+}
+class OverAgeException extends Exception{
+	
+	OverAgeException(String msg){
+	    super(msg);
+	}
+	
+}
+class LiscenceApp   {
+	private int age;
+	public void input()  {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Dear Kindly Enter your age to check eligibility");
+		age =  sc.nextInt();
+	}
+	public void verify() throws UnderAgeException, OverAgeException{
+		if(age>=18&&age<=60) {
+			System.out.println("You are eligible");
+		}
+		else if(age<18) {
+			throw  new  UnderAgeException("Pora pilla puka");
+			
+		}
+		else if(age>60) {
+			throw new OverAgeException("Your time is near be carefull");
+			
+		}
+	}
+	
+}
+class RTO{
+	public void  initiate() {
+		System.out.println("Welcome to RTO Office");
+		LiscenceApp la = new LiscenceApp();
+		try {
+		la.input();
+		la.verify();
+		}catch(UnderAgeException | OverAgeException e ) {
+			System.out.println(e.getMessage());
+			try {
+				la.input();
+				la.verify();
+			}catch(UnderAgeException | OverAgeException f) {
+				System.out.println(f.getMessage());
+				try {
+					la.input();
+					la.verify();
+				}catch(UnderAgeException | OverAgeException g) {
+					System.out.println("Something is suspicious");
+					System.out.println("Thank you for visiting");
+				}
+			}
+		}
+		
+	}
+	
+}
+
+public class Sample {
+	public static void main(String[] args) {
+		RTO r = new RTO();
+		r.initiate();
+	}
+
+
+}
+
+
+programe-2:
+
+package bank;
+
+import java.util.Scanner;
+class InvalidUserException extends Exception{
+	InvalidUserException(String msg){
+		super(msg);		
+	}
+	
+}
+
+class ATM{
+	private int accountNumber=12345;
+	private int password=8998;
+	private int accNUm;
+	private int accPass;
+	 public void input() {
+		 Scanner sc = new Scanner(System.in);
+		 System.out.println("Enter the account number :");
+		 accNUm= sc.nextInt();
+		 System.out.println("Enter the Password");
+		 accPass = sc.nextInt();
+	 }
+	 public void verify() throws InvalidUserException {
+		 if(accountNumber==accNUm&&accPass==password) {
+			 System.out.println("collect Your Cash");
+			 System.out.println("Thank you for using my ATM");
+		 }else {
+			 throw new InvalidUserException("Invalid Credentials");
+			
+		 }
+	 }
+	
+}
+class Bank{
+	public void initiate() throws InvalidUserException {
+		ATM a = new ATM();
+		a.input();
+		a.verify();
+	}
+	
+}
+
+public class MainBank {
+	public static void main(String[] args) {
+		System.out.println("Welcome to Diwancheruvu ATM");
+		Bank b = new Bank();
+		try {
+		b.initiate();
+		}catch(InvalidUserException e) {
+			try {
+				System.out.println(e.getMessage());
+			b.initiate();
+			}catch(InvalidUserException f) {
+				try {
+					System.out.println(f.getMessage());
+				b.initiate();
+				}catch(InvalidUserException g) {
+					System.out.println("TATA TATA bye bye your card is blocked !!!!");
+					System.out.println("Thank you for using this atm");
+				}
+			}
+		}
+	}
+
+}
+
+
+
+
+
+Notes
+
+
+
+String s = Bufferreader("c:/Dowmloads/excelfile);
+syso(s) //vamsi
+
+jexcel  ---->vamsi program
+            joshiprogram
+
+In real time  application we use many resources where all the resources should be closed inside finally block
+
+Resource  => In file operations are used FileReader, FileWriter, BufferRedaer, BufferWriter
+
+BufferReader br = null;
+FileReader fr = null;
+try{
+ br = new BufferReader(new FileReader("Sample.txt");
+fr= new FileReader();
+---------
+---------
+}catch(IOExcption e){
+   e.prsntStacktrace();
+ }finally{
+     if(br!=null){
+          br.close();
+      }else if(fr!= null){
+          fr.close();
+      }
+
+BoilerPlate code
++====================
+The code which is repeated in multiple modules of project with no change. whenever boiler plate comes 
+into picture, we always try to avoid it
+by using:
+1)JDK Higher versions
+2) Using 3rd party API's
+
+try with resources:
+================\
+
+try(BufferReader br = new BufferReader(FileReader("SampleText"){
+     int a = 10;
+     int b =0 ;
+     int c = a/b;
+  }catch(IOException e){
+    e.prinStackTrace();
+  }
+ADVANTAGES OF TRY WITH RESOURSES
+=========================
+The main advantage of try with resource is the resorces which are apart of try block gets close automatically.
+*) Once the control comes of out try block automatically that resource will be closed while try block is getting executed
+ a. Exception occured and handled or not handled 
+in both cases resources closes automatically
+
+2)Using Try with resorces incredibility and reduces reduent code in your program
+
+conclusion
+====
+1. we can declare any no of resources, but all the resources should be seperated with ;
+
+try(R1;R2;R3;R4......){
+
+ }catch{
+    
+  }
+
+
+2)From jdk 1.7 for resource releasing logic requirement specification they had come with an interface called
+  "AutoCloseable"wghich is added inn java.lang package
+
+   interface AutoCloseable {
+     public abstract void close();
+   }
+
+   class BufferReader implements AutoClosable(){
+     public void close(){
+      //logic for closing
+        }
+    }
+
+
+try(BufferReader br = new BufferReader(new FileReader("Sample.txt"){
+
+      //logic \
+}catch{
+ 
+} 
+
+
+8:33 PM 10/14/2022
